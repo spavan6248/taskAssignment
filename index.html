@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Assignment</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .completed {
+            background-color: #c8e6c9;
+        }
+    </style>
+</head>
+<body>
+    <h1>Task Assignment</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Utensils Cleaning</th>
+                <th>Sweeping</th>
+                <th>Water</th>
+                <th>Water Tin</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Pavan</td>
+                <td><input type="checkbox" onclick="markCompleted(this)"></td>
+                <td><input type="checkbox" onclick="markCompleted(this)"></td>
+                <td><input type="checkbox" onclick="markCompleted(this)"></td>
+                <td><input type="checkbox" onclick="markCompleted(this)"></td>
+            </tr>
+            <tr>
+                <td>Vineesh</td>
+                <td><input type="checkbox" onclick="markCompleted(this)"></td>
+                <td><input type="checkbox" onclick="markCompleted(this)"></td>
+                <td><input type="checkbox" onclick="markCompleted(this)"></td>
+                <td><input type="checkbox" onclick="markCompleted(this)"></td>
+            </tr>
+            <tr>
+                <td>Vicky</td>
+                <td><input type="checkbox" onclick="markCompleted(this)"></td>
+                <td><input type="checkbox" onclick="markCompleted(this)"></td>
+                <td><input type="checkbox" onclick="markCompleted(this)"></td>
+                <td><input type="checkbox" onclick="markCompleted(this)"></td>
+            </tr>
+            <tr>
+                <td>Sravan</td>
+                <td><input type="checkbox" onclick="markCompleted(this)"></td>
+                <td><input type="checkbox" onclick="markCompleted(this)"></td>
+                <td><input type="checkbox" onclick="markCompleted(this)"></td>
+                <td><input type="checkbox" onclick="markCompleted(this)"></td>
+            </tr>
+            <tr>
+                <td>Nithesh</td>
+                <td><input type="checkbox" onclick="markCompleted(this)"></td>
+                <td><input type="checkbox" onclick="markCompleted(this)"></td>
+                <td><input type="checkbox" onclick="markCompleted(this)"></td>
+                <td><input type="checkbox" onclick="markCompleted(this)"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script>
+        function markCompleted(checkbox) {
+            if (checkbox.checked) {
+                checkbox.closest('tr').classList.add('completed');
+            } else {
+                checkbox.closest('tr').classList.remove('completed');
+            }
+        }
+    </script>
+</body>
+</html>
