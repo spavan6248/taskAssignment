@@ -3,6 +3,7 @@ let currentDayIndex = 0;
 
 document.addEventListener('DOMContentLoaded', () => {
     loadTables();
+    document.getElementById('clear-btn').addEventListener('click', clearAllChecks);
 });
 
 function createTable(day, dayIndex) {
@@ -53,28 +54,40 @@ function createRow(name, dayIndex) {
 }
 
 function markCompleted(checkbox, dayIndex) {
-    const table = checkbox.closest('table');
-    const allCheckboxes = table.querySelectorAll('input[type="checkbox"]');
-    const anyChecked = Array.from(allCheckboxes).some(cb => cb.checked);
-
     saveCheckboxStates(dayIndex);
 
-    if (anyChecked && currentDayIndex < daysOfWeek.length - 1) {
-        const allRows = table.querySelectorAll('tbody tr');
-        let allRowsCompleted = true;
+    const table = checkbox.closest('table');
+    const rows = table.querySelectorAll('tbody tr');
+    let allPersonsAssigned = true;
 
-        allRows.forEach(row => {
-            const rowCheckboxes = row.querySelectorAll('input[type="checkbox"]');
-            if (!Array.from(rowCheckboxes).some(cb => cb.checked)) {
-                allRowsCompleted = false;
-            }
-        });
+    rows.forEach(row => {
+        const rowCheckboxes = row.querySelectorAll('input[type="checkbox"]');
+        if (!Array.from(rowCheckboxes).some(cb => cb.checked)) {
+            allPersonsAssigned = false;
+        }
+    });
 
-        if (allRowsCompleted) {
+    const nextDayIndex = dayIndex + 1;
+
+    if (allPersonsAssigned) {
+        if (!document.querySelector(`div[data-day-index="${nextDayIndex}"]`) && dayIndex < daysOfWeek.length - 1) {
             currentDayIndex++;
             createTable(daysOfWeek[currentDayIndex], currentDayIndex);
         }
+    } else {
+        deleteSubsequentTables(dayIndex);
     }
+}
+
+function deleteSubsequentTables(startIndex) {
+    for (let i = startIndex + 1; i < daysOfWeek.length; i++) {
+        const table = document.querySelector(`div[data-day-index="${i}"]`);
+        if (table) {
+            table.remove();
+            localStorage.removeItem(`day-${i}-checkboxes`);
+        }
+    }
+    currentDayIndex = startIndex;
 }
 
 function saveCheckboxStates(dayIndex) {
@@ -105,4 +118,13 @@ function loadTables() {
     if (currentDayIndex === 0) {
         createTable(daysOfWeek[currentDayIndex], currentDayIndex);
     }
+}
+
+function clearAllChecks() {
+    for (let i = 0; i < daysOfWeek.length; i++) {
+        localStorage.removeItem(`day-${i}-checkboxes`);
+    }
+    document.getElementById('tables-container').innerHTML = '';
+    currentDayIndex = 0;
+    createTable(daysOfWeek[currentDayIndex], currentDayIndex);
 }
